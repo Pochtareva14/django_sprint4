@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+  Публикации в категории «{{ category.title }}»
+{% endblock %}
+{% block content %}
+<h1>Публикации в категории «{{ category.title }}»</h1>
+<p class="mb-5">{{ category.description }}</p>
+
+{% if posts %}
+  {% for post in posts %}
+    <article class="mb-5">  
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.text }}</p>
+
+      {% if post.location %}
+        <p>Местоположение: {{ post.location.name }}</p>
+      {% else %}
+        <p>Местоположение не указано.</p>
+      {% endif %}
+
+      <p>Автор: {{ post.author }}</p>
+      <p>Дата публикации: {{ post.pub_date }}</p>
+
+      {% include "includes/post_card.html" %}
+    </article>   
+  {% endfor %}
+{% else %}
+  <p>В этой категории нет публикаций.</p>
+{% endif %}
+{% endblock %}
