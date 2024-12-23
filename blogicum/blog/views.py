@@ -328,5 +328,5 @@ class CommentUpdateView(CommentMixinView, UpdateView):
 
 class CommentDeleteView(DetailView):
     model = Post
-    template_name = "blog/detail.html"
-    success_url = reverse_lazy('blog:post_detail')
+    template_name = "blog/comment.html"
+
