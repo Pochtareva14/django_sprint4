@@ -32,5 +32,3 @@ class CommentEditForm(forms.ModelForm):
         widgets = {
             "text": forms.Textarea({"rows": "3"})
         }
-
-
