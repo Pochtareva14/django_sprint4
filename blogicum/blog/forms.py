@@ -1,34 +1,24 @@
 from django import forms
 
-from .models import User, Post, Comment
+from .models import Post, Comment, User
 
 
-class UserEditForm(forms.ModelForm):
-    """Форма редактирования информации о пользователе."""
-
-    class Meta:
-        model = User
-        fields = ("first_name", "last_name", "username", "email")
-
-
-class PostEditForm(forms.ModelForm):
-    """Форма редактирования поста."""
+class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = ("author", "created_at")
-        widgets = {
-            "text": forms.Textarea({"rows": "5"}),
-            "pub_date": forms.DateTimeInput(attrs={"type": "datetime-local"}),
-        }
+        exclude = ('author',)
 
 
-class CommentEditForm(forms.ModelForm):
-    """Форма редактирования комментария."""
+class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ("text",)
-        widgets = {
-            "text": forms.Textarea({"rows": "3"})
-        }
+        fields = ('text',)
+
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')

@@ -1,76 +1,38 @@
-from django.urls import path
+from django.urls import include, path
 
 from . import views
 
-app_name = "blog"
+app_name = 'blog'
+
+post_urls = [
+    path('create/',
+         views.create_post, name='create_post'),
+    path('<int:post_id>/',
+         views.post_detail, name='post_detail'),
+    path('<int:post_id>/edit/',
+         views.edit_post, name='edit_post'),
+    path('<int:post_id>/delete/',
+         views.delete_post, name='delete_post'),
+    path('<int:post_id>/comment/',
+         views.add_comment, name='add_comment'),
+    path('<int:post_id>/edit_comment/<int:comment_id>/',
+         views.edit_comment, name='edit_comment'),
+    path('<int:post_id>/delete_comment/<int:comment_id>/',
+         views.delete_comment, name='delete_comment'),
+]
+
+profile_urls = [
+    path('edit/',
+         views.edit_profile, name='edit_profile'),
+    path('<slug:username>/',
+         views.profile, name='profile'),
+]
 
 urlpatterns = [
-    # Главная.
-    path(
-        "",
-        views.MainPostListView.as_view(),
-        name="index",
-    ),
-    # Категория.
-    path(
-        "category/<slug:category_slug>/",
-        views.CategoryPostListView.as_view(),
-        name="category_posts",
-    ),
-    # Посты опубликованные определенным пользователем.
-    # Для владельца страницы присутствует меню перехода на страницу
-    # редактированию профиля и страницу смены пароля.
-    path(
-        "profile/<slug:username>/",
-        views.UserPostsListView.as_view(),
-        name="profile",
-    ),
-    # Пост.
-    path(
-        "posts/<int:pk>/",
-        views.PostDetailView.as_view(),
-        name="post_detail",
-    ),
-    # Редактировать профиля пользователя.
-    path(
-        "edit_profile/",
-        views.UserProfileUpdateView.as_view(),
-        name="edit_profile",
-    ),
-    # Создать пост.
-    path(
-        "posts/create/",
-        views.PostCreateView.as_view(),
-        name="create_post",
-    ),
-    # Редактировать пост.
-    path(
-        "posts/<int:pk>/edit/",
-        views.PostUpdateView.as_view(),
-        name="edit_post",
-    ),
-    # Удалить пост.
-    path(
-        "posts/<int:pk>/delete/",
-        views.PostDeleteView.as_view(),
-        name="delete_post",
-    ),
-    # Добавить комментарий.
-    path(
-        "posts/<int:pk>/comment/",
-        views.CommentCreateView.as_view(),
-        name="add_comment",
-    ),
-    # Редактировать комментарий.
-    path(
-        "posts/<int:pk>/edit_comment/<int:comment_pk>/",
-        views.CommentUpdateView.as_view(),
-        name="edit_comment",
-    ),
-    # Удалить комментарий
-    path(
-        "posts/<int:pk>/delete_comment/<int:comment_pk>/",
-        views.CommentDeleteView.as_view(),
-        name="delete_comment",
-    ),
+    path('',
+         views.index, name='index'),
+    path('category/<slug:category_slug>/',
+         views.category_posts, name='category_posts'),
+    path('posts/', include(post_urls)),
+    path('profile/', include(profile_urls)),
 ]
